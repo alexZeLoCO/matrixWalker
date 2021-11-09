@@ -6,7 +6,7 @@
 class Board {
 private:
   int size;
-  int **M;
+  char **M;
 
 public:
   Board (int size);
@@ -14,7 +14,7 @@ public:
   void setSize(int size);
   int getSize();
 
-  int** getBoard();
+  char** getBoard();
 
   void show ();
   void fill ();
