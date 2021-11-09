@@ -40,6 +40,86 @@ void Board :: show () {
   printf("\n");
 }
 
+bool Board :: invalidPosition (Point p) {
+  return  ((p.getX() >= getSize()) || (p.getY() >= getSize()) || (getBoard()[p.getX()][p.getY()] != '0'));
+}
+
+Point Board :: spawnNearby(Point p) {
+  bool invalid = true;   //Sentinel
+
+  Point test (p); //To be tested
+  Point output;  //To be pasted when found a solution
+
+  for (int i=1; i<getSize() && invalid ; i++) {
+    //Checking above
+    test.setY(p.getY() + i);
+    if (!invalidPosition(test)) {
+      invalid = false;
+      output.setPosition(test);
+    }
+
+    //Checking below
+    test.setY(p.getY() - i);
+    if (!invalidPosition(test)) {
+      invalid = false;
+      output.setPosition(test);
+    }
+
+    test.setY(p.getY());  //Resetting Y
+    //Checking left
+    test.setX(p.getX() - i);
+    if (!invalidPosition(test)) {
+      invalid = false;
+      output.setPosition(test);
+    }
+
+    //Checking right
+    test.setX(p.getX() + i);
+    if (!invalidPosition(test)) {
+      invalid = true;
+      output.setPosition(test);
+    }
+
+    //Checking top left
+    test.setX(p.getX() - i);
+    test.setY(p.getY() + i);
+    if (!invalidPosition(test)) {
+      invalid = true;
+      output.setPosition(test);
+    }
+
+    //Checking top right
+    test.setX(p.getX() + i);
+    if (!invalidPosition(test)) {
+      invalid = true;
+      output.setPosition(test);
+    }
+
+    //Checking bottom rigth
+    test.setY(p.getY() - i);
+    if (!invalidPosition(test)) {
+      invalid = true;
+      output.setPosition(test);
+    }
+
+    //Checking bottom left
+    test.setX(p.getX() - i);
+    if (!invalidPosition(test)) {
+      invalid = true;
+      output.setPosition(test);
+    }
+  }
+  return output;
+}
+
 void Board :: spawn (Entity e) {
-  getBoard()[e.getPosition().getX()][e.getPosition().getY()] = e.getTag();
+  if (invalidPosition(e.getPosition())) {
+        //Invalid spawn position. Check adyacent spots.
+        Point spawn = spawnNearby(e.getPosition());
+        if (!invalidPosition(spawn)) {
+          getBoard()[spawn.getX()][spawn.getY()] = e.getTag();
+        }
+  } else {
+        getBoard()[e.getPosition().getX()][e.getPosition().getY()] = e.getTag();
+  }
 }

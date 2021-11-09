@@ -27,7 +27,7 @@ string Entity :: getName () {
   return this-> name;
 }
 
-Point Entity :: getPosition () {
+const Point Entity :: getPosition () {
   return this-> position;
 }
 

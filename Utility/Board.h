@@ -21,6 +21,9 @@ public:
 
   void place (Entity old, Point n);
   void spawn (Entity e);
+
+  bool invalidPosition (Point p);
+  Point spawnNearby(Point p);
 };
 
 #endif // BOARD_H

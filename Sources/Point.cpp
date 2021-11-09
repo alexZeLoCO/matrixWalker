@@ -10,6 +10,11 @@ Point :: Point (int x, int y) {
   setY(y);
 }
 
+Point :: Point (Point &p) {
+  this->setX(p.getX());
+  this->setY(p.getY());
+}
+
 Point :: Point () {
   setX(0);
   setY(0);
@@ -21,6 +26,11 @@ void Point :: setX (int x) {
 
 void Point :: setY (int y) {
   this->y=y;
+}
+
+void Point :: setPosition (Point p) {
+  this->setX(p.getX());
+  this->setY(p.getY());
 }
 
 int Point :: getX () {

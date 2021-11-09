@@ -15,22 +15,14 @@ int main () {
 
   Point p (2,2);
   Entity user ("User", p);
-
   cout << user.toString();
-  p.setX(6);
-  p.setY(7);
+
   Entity target ("Target", p);
   cout << target.toString();
 
-  p.setX(1);
-  p.setY(1);
-  Entity one ("1one", p);
-  cout << one.toString();
-
   board.spawn(user);
   board.spawn(target);
-  board.spawn(one);
-  
+
   board.show();
 
   return 1;

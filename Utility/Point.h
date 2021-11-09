@@ -10,6 +10,7 @@ private:
 
 public:
  Point (int x, int y);
+ Point (Point  &p);
  Point ();
 
  int getX();
@@ -17,6 +18,8 @@ public:
 
  void setX(int x);
  void setY(int y);
+
+ void setPosition (Point p);
 
  string toString();
 };
