@@ -18,7 +18,7 @@ void Entity :: setPosition (Point position) {
   this->position = position;
 }
 
-void Entity :: setTag (char c) {
+void Entity :: setTag (char tag) {
   this-> tag = tag;
 }
 
@@ -31,5 +31,5 @@ Point Entity :: getPosition () {
 }
 
 char Entity :: getTag () {
-  return this -> tag;
+  return this-> tag;
 }

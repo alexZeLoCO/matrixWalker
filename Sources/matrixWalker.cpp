@@ -2,6 +2,7 @@
 #include "../Utility/testing.h"
 #include "Point.cpp"
 #include "Entity.cpp"
+#include "Board.cpp"
 #include <string>
 
 #define SIZE 10
@@ -10,19 +11,23 @@ using namespace std;
 
 int main () {
 
-  int **M;
-  M = new int * [SIZE];
-  for (int i = 0; i < SIZE; i++) {
-    M[i] = new int [SIZE];
-  }
-
-  fill(M, SIZE, 0);
+  Board board (SIZE);
 
   Point p (2,2);
   Entity user ("User", p);
-  //printf("Entity %s, in (%d, %d)\n", user.getName(), user.getPosition().getX(), user.getPosition().getY());
+
   cout << "Entity " << user.getName() << " (" << user.getTag() << ") , in (" << user.getPosition().getX() << ", " << user.getPosition().getY() << ")" << endl;
-  show(M, SIZE);
-  
+
+  p.setX(6);
+  p.setY(7);
+  Entity target ("Target", p);
+  cout << "Entity " << target.getName() << " (" << target.getTag() << ") , in (" << target.getPosition().getX() << ", " << target.getPosition().getY() << ")" << endl;
+
+  board.show();
+
+  board.spawn(user);
+  board.spawn(target);
+  board.show();
+
   return 1;
 }

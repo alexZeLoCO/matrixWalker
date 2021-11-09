@@ -6,13 +6,21 @@
 class Board {
 private:
   int size;
-  int M[][];
+  int **M;
 
 public:
   Board (int size);
 
+  void setSize(int size);
+  int getSize();
+
+  int** getBoard();
+
   void show ();
-  void place (Entity old, Point new);
+  void fill ();
+
+  void place (Entity old, Point n);
+  void spawn (Entity e);
 };
 
 #endif // BOARD_H

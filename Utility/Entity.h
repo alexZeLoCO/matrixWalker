@@ -22,7 +22,7 @@ public:
   void setPosition(Point position);
   void setName(string name);
 
-  void setTag(char c);
+  void setTag(char tag);
   char getTag();
 };
 
