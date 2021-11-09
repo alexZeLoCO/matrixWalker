@@ -16,12 +16,11 @@ int main () {
   Point p (2,2);
   Entity user ("User", p);
 
-  //cout << "Entity " << user.getName() << " (" << user.getTag() << ") , in (" << user.getPosition().getX() << ", " << user.getPosition().getY() << ")" << endl;
   cout << user.toString();
   p.setX(6);
   p.setY(7);
   Entity target ("Target", p);
-  //cout << "Entity " << target.getName() << " (" << target.getTag() << ") , in (" << target.getPosition().getX() << ", " << target.getPosition().getY() << ")" << endl;
+
   cout << target.toString();
   board.show();
 

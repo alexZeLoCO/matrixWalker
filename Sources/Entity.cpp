@@ -40,7 +40,7 @@ string Entity :: toString () {
   buffer <<
   "Entity:\n" <<
   "\tName: " << getName() << " (" << getTag() << ")\n" <<
-  "\tPosition: " << getPosition().toString()"\n";
+  "\tPosition: " << getPosition().toString() << "\n";
 
   return buffer.str();
 }

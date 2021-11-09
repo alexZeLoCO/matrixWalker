@@ -34,8 +34,8 @@ int Point :: getY () {
 string Point :: toString () {
 
   ostringstream buffer;
-  buffer << "(" << ", " << ")\n";
+  buffer << "(" << getX() << ", " << getY() << ")\n";
 
   return buffer.str();
-  
+
 }

@@ -1,5 +1,5 @@
 #ifndef POINT_H
-#define POINT_Hint
+#define POINT_H
 
 using namespace std;
 
@@ -18,7 +18,7 @@ public:
  void setX(int x);
  void setY(int y);
 
- string toString():
+ string toString();
 };
 
 #endif // POINT_H
