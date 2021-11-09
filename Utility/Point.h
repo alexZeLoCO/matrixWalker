@@ -1,5 +1,7 @@
 #ifndef POINT_H
-#define POINT_H
+#define POINT_Hint
+
+using namespace std;
 
 class Point {
 private:
@@ -16,6 +18,7 @@ public:
  void setX(int x);
  void setY(int y);
 
+ string toString():
 };
 
 #endif // POINT_H

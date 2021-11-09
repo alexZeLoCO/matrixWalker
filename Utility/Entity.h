@@ -2,10 +2,6 @@
 #define ENTITY_H
 
 #include "Point.h"
-#include <iostream>
-#include <string>
-
-using namespace std;
 
 class Entity {
 private:
@@ -24,6 +20,8 @@ public:
 
   void setTag(char tag);
   char getTag();
+
+  string toString();
 };
 
 #endif // ENTITY_H

@@ -1,6 +1,7 @@
 #include "../Utility/Entity.h"
 #include <iostream>
 #include <string>
+#include <sstream>
 
 using namespace std;
 
@@ -32,4 +33,14 @@ Point Entity :: getPosition () {
 
 char Entity :: getTag () {
   return this-> tag;
+}
+
+string Entity :: toString () {
+  ostringstream buffer;
+  buffer <<
+  "Entity:\n" <<
+  "\tName: " << getName() << " (" << getTag() << ")\n" <<
+  "\tPosition: " << getPosition().toString()"\n";
+
+  return buffer.str();
 }

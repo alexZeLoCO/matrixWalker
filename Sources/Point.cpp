@@ -1,4 +1,9 @@
 #include "../Utility/Point.h"
+#include <iostream>
+#include <string>
+#include <sstream>
+
+using namespace std;
 
 Point :: Point (int x, int y) {
   setX(x);
@@ -24,4 +29,13 @@ int Point :: getX () {
 
 int Point :: getY () {
   return this->y;
+}
+
+string Point :: toString () {
+
+  ostringstream buffer;
+  buffer << "(" << ", " << ")\n";
+
+  return buffer.str();
+  
 }
