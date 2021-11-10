@@ -1,4 +1,4 @@
-#include "../Utility/Board.h"
+#include "../Headers/Board.h"
 #include <iostream>
 
 Board :: Board (int size) {
@@ -40,27 +40,30 @@ void Board :: show () {
   printf("\n");
 }
 
-bool Board :: invalidPosition (Point p) {
+bool Board :: invalidPosition (Point&& p) {
   return  ((p.getX() >= getSize()) || (p.getY() >= getSize()) || (getBoard()[p.getX()][p.getY()] != '0'));
 }
 
-Point Board :: spawnNearby(Point p) {
+Point Board :: spawnNearby(Point&& p) {
   bool invalid = true;   //Sentinel
 
   Point test (p); //To be tested
+/*
+https://www.fluentcpp.com/2018/02/06/understanding-lvalues-rvalues-and-their-references/#:~:text=In%20C%2B%2B%2C%20every%20expression%20is%20either%20an%20lvalue,object%20names%20and%20are%20lvalues%29%2C%20but%20not%20only.
+*/
   Point output;  //To be pasted when found a solution
 
   for (int i=1; i<getSize() && invalid ; i++) {
     //Checking above
     test.setY(p.getY() + i);
-    if (!invalidPosition(test)) {
+    if (!invalidPosition(std::move(test))) {
       invalid = false;
       output.setPosition(test);
     }
 
     //Checking below
     test.setY(p.getY() - i);
-    if (!invalidPosition(test)) {
+    if (!invalidPosition(std::move(test))) {
       invalid = false;
       output.setPosition(test);
     }
@@ -68,14 +71,14 @@ Point Board :: spawnNearby(Point p) {
     test.setY(p.getY());  //Resetting Y
     //Checking left
     test.setX(p.getX() - i);
-    if (!invalidPosition(test)) {
+    if (!invalidPosition(std::move(test))) {
       invalid = false;
       output.setPosition(test);
     }
 
     //Checking right
     test.setX(p.getX() + i);
-    if (!invalidPosition(test)) {
+    if (!invalidPosition(std::move(test))) {
       invalid = true;
       output.setPosition(test);
     }
@@ -83,28 +86,28 @@ Point Board :: spawnNearby(Point p) {
     //Checking top left
     test.setX(p.getX() - i);
     test.setY(p.getY() + i);
-    if (!invalidPosition(test)) {
+    if (!invalidPosition(std::move(test))) {
       invalid = true;
       output.setPosition(test);
     }
 
     //Checking top right
     test.setX(p.getX() + i);
-    if (!invalidPosition(test)) {
+    if (!invalidPosition(std::move(test))) {
       invalid = true;
       output.setPosition(test);
     }
 
     //Checking bottom rigth
     test.setY(p.getY() - i);
-    if (!invalidPosition(test)) {
+    if (!invalidPosition(std::move(test))) {
       invalid = true;
       output.setPosition(test);
     }
 
     //Checking bottom left
     test.setX(p.getX() - i);
-    if (!invalidPosition(test)) {
+    if (!invalidPosition(std::move(test))) {
       invalid = true;
       output.setPosition(test);
     }
@@ -113,10 +116,10 @@ Point Board :: spawnNearby(Point p) {
 }
 
 void Board :: spawn (Entity e) {
-  if (invalidPosition(e.getPosition())) {
+  if (invalidPosition(std::move(e.getPosition()))) {
         //Invalid spawn position. Check adyacent spots.
-        Point spawn = spawnNearby(e.getPosition());
-        if (!invalidPosition(spawn)) {
+        Point spawn = spawnNearby(std::move(e.getPosition()));
+        if (!invalidPosition(std::move(spawn))) {
           getBoard()[spawn.getX()][spawn.getY()] = e.getTag();
         }
   } else {

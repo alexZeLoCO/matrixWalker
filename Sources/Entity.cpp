@@ -1,4 +1,4 @@
-#include "../Utility/Entity.h"
+#include "../Headers/Entity.h"
 #include <iostream>
 #include <string>
 #include <sstream>
@@ -27,8 +27,8 @@ string Entity :: getName () {
   return this-> name;
 }
 
-const Point Entity :: getPosition () {
-  return this-> position;
+Point&& Entity :: getPosition () {
+  return std::move(this-> position);
 }
 
 char Entity :: getTag () {

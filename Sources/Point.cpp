@@ -1,4 +1,4 @@
-#include "../Utility/Point.h"
+#include "../Headers/Point.h"
 #include <iostream>
 #include <string>
 #include <sstream>

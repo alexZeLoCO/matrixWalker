@@ -12,7 +12,7 @@ private:
 public:
   Entity (string name, Point position);
 
-  Point getPosition();
+  Point&& getPosition();
   string getName();
 
   void setPosition(Point position);
