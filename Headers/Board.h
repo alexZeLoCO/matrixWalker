@@ -23,7 +23,7 @@ public:
   void spawn (Entity e);
 
   bool invalidPosition (Point&& p);
-  Point spawnNearby(Point&& p);
+  Point spawnNearby(int x, int y);
 };
 
 #endif // BOARD_H

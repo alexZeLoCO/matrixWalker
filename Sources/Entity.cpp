@@ -27,8 +27,8 @@ string Entity :: getName () {
   return this-> name;
 }
 
-Point&& Entity :: getPosition () {
-  return std::move(this-> position);
+Point Entity :: getPosition () {
+  return this-> position;
 }
 
 char Entity :: getTag () {
