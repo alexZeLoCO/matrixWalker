@@ -34,12 +34,12 @@ void Point :: setY (int y) {
 }
 
 void Point :: setPosition (Point p) {
+  /*
   this->x=p.getX();
   this->y=p.getY();
-  /*
+  */
   this->setX(p.getX());
   this->setY(p.getY());
-  */
 }
 
 int Point :: getX () {
