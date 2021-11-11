@@ -41,7 +41,17 @@ void Board :: show () {
 }
 
 bool Board :: invalidPosition (Point&& p) {
-  return  ((p.getX() >= getSize()) || (p.getY() >= getSize()) || (getBoard()[p.getX()][p.getY()] != '0'));
+  if (p.getX() > getSize()) {
+    return true;
+  }
+  if (p.getY() > getSize()) {
+    return false;
+  }
+  if (getBoard()[p.getX()][p.getY()] != '0') {
+    return false;
+  }
+  return true;
+  //return  ((p.getX() > getSize()) || (p.getY() > getSize()) || (getBoard()[p.getX()][p.getY()] != '0'));
 }
 
 Point Board :: spawnNearby(Point&& p) {
@@ -118,7 +128,7 @@ https://www.fluentcpp.com/2018/02/06/understanding-lvalues-rvalues-and-their-ref
 void Board :: spawn (Entity e) {
   if (invalidPosition(std::move(e.getPosition()))) {
         //Invalid spawn position. Check adyacent spots.
-        Point spawn = spawnNearby(std::move(e.getPosition()));
+        Point spawn (std::move(spawnNearby(e.getPosition())));
         if (!invalidPosition(std::move(spawn))) {
           getBoard()[spawn.getX()][spawn.getY()] = e.getTag();
         }

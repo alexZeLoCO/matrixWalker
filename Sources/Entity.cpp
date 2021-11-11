@@ -16,7 +16,8 @@ void Entity :: setName (string name) {
 }
 
 void Entity :: setPosition (Point position) {
-  this->position = position;
+  this->position.setX(position.getX());
+  this->position.setY(position.getY());
 }
 
 void Entity :: setTag (char tag) {
@@ -27,8 +28,8 @@ string Entity :: getName () {
   return this-> name;
 }
 
-Point&& Entity :: getPosition () {
-  return std::move(this-> position);
+Point Entity :: getPosition () {
+  return this-> position;
 }
 
 char Entity :: getTag () {

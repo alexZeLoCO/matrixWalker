@@ -10,7 +10,8 @@ private:
 
 public:
  Point (int x, int y);
- Point (Point  &p);
+ Point (Point&& p);
+ Point (Point &p);
  Point ();
 
  int getX();
