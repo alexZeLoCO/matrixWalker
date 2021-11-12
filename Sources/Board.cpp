@@ -11,6 +11,15 @@ Board :: Board (int size) {
   fill();
 }
 
+Board :: Board (int size, Tag ** B) {
+    setSize(size);
+    M = new Tag * [size];
+    for (int i = 0; i < size; i++) {
+      M[i] = new Tag [size];
+    }
+    M = B;
+}
+
 void Board :: setSize (int size) {
   this-> size = size;
 }

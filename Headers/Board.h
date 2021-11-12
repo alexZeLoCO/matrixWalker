@@ -11,6 +11,7 @@ private:
 
 public:
   Board (int size);
+  Board (int size, Tag **B);
 
   void setSize(int size);
   int getSize();
