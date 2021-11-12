@@ -40,16 +40,20 @@ void Board :: show () {
   printf("\n");
 }
 
-bool Board :: invalidPosition (Point&& p) {
+bool Board :: invalidPosition (Point p) {
 
-  if(getSize() > p.getX() || getSize() > p.getY()) return false;
-  if (getBoard()[p.getX()][p.getY()] != '0') return false;
-  
-  return true;
+  if(isOutOfBounds(p)) return true;
+  if (getBoard()[p.getX()][p.getY()] != '0') return true;
+
+  return false;
   //return  ((p.getX() > getSize()) || (p.getY() > getSize()) || (getBoard()[p.getX()][p.getY()] != '0'));
 }
 
-Point Board :: spawnNearby(Point&& p) {
+bool Board :: isOutOfBounds (Point p) {
+    return getSize() < p.getX() || getSize() < p.getY() || p.getX() < 0 || p.getY() < 0;
+}
+
+Point Board :: spawnNearby(Point p) {
   bool invalid = true;   //Sentinel
 
   Point test (p); //To be tested
@@ -59,75 +63,113 @@ https://www.fluentcpp.com/2018/02/06/understanding-lvalues-rvalues-and-their-ref
   Point output;  //To be pasted when found a solution
 
   for (int i=1; i<getSize() && invalid ; i++) {
-    //Checking above
+    //Checking right
     test.setY(p.getY() + i);
-    if (!invalidPosition(std::move(test))) {
+    if (!invalidPosition(test)) {
       invalid = false;
       output.setPosition(test);
+      break;
     }
 
-    //Checking below
+    //Checking left
     test.setY(p.getY() - i);
-    if (!invalidPosition(std::move(test))) {
+    if (!invalidPosition(test)) {
       invalid = false;
       output.setPosition(test);
+      break;
     }
 
     test.setY(p.getY());  //Resetting Y
-    //Checking left
+    //Checking below
     test.setX(p.getX() - i);
-    if (!invalidPosition(std::move(test))) {
+    if (!invalidPosition(test)) {
       invalid = false;
       output.setPosition(test);
+      break;
     }
 
-    //Checking right
+    //Checking above
     test.setX(p.getX() + i);
-    if (!invalidPosition(std::move(test))) {
+    if (!invalidPosition(test)) {
       invalid = true;
       output.setPosition(test);
+      break;
+    }
+
+    //Checking bottom right
+    test.setX(p.getX() - i);
+    test.setY(p.getY() + i);
+    if (!invalidPosition(test)) {
+      invalid = true;
+      output.setPosition(test);
+      break;
     }
 
     //Checking top left
-    test.setX(p.getX() - i);
-    test.setY(p.getY() + i);
-    if (!invalidPosition(std::move(test))) {
-      invalid = true;
-      output.setPosition(test);
-    }
-
-    //Checking top right
     test.setX(p.getX() + i);
-    if (!invalidPosition(std::move(test))) {
+    if (!invalidPosition(test)) {
       invalid = true;
       output.setPosition(test);
+      break;
     }
 
-    //Checking bottom rigth
+    //Checking bottom left
     test.setY(p.getY() - i);
-    if (!invalidPosition(std::move(test))) {
+    if (!invalidPosition(test)) {
       invalid = true;
       output.setPosition(test);
+      break;
     }
 
     //Checking bottom left
     test.setX(p.getX() - i);
-    if (!invalidPosition(std::move(test))) {
+    if (!invalidPosition(test)) {
       invalid = true;
       output.setPosition(test);
+      break;
     }
   }
   return output;
 }
 
+Point Board :: spawnInBorder (Point p) {
+    if (getSize() < p.getX()) {
+      p.setX(getSize()-1);
+    }
+    if (getSize() < p.getY()) {
+      p.setY(getSize()-1);
+    }
+
+    if (p.getX() < 0) {
+      p.setX(0);
+    }
+    if (p.getY() < 0) {
+      p.setY(0);
+    }
+    return p;
+}
+
 void Board :: spawn (Entity e) {
-  if (invalidPosition(std::move(e.getPosition()))) {
+  printf("Spawning ");
+  cout << e.toString();
+  if (invalidPosition(e.getPosition())) {
+    printf("Invalid due to ");
+    //do {
+      if (isOutOfBounds(e.getPosition())) {
+        printf("Out of Bounds\n");
+        e.setPosition (spawnInBorder(e.getPosition()));
+      } else {
+        printf("Overlapping entity\n");
+        e.setPosition (spawnNearby(e.getPosition()));
+      }
+    //} while (invalidPosition(e.getPosition()));
+      /*
         //Invalid spawn position. Check adyacent spots.
         Point spawn (std::move(spawnNearby(e.getPosition())));
         if (!invalidPosition(std::move(spawn))) {
           getBoard()[spawn.getX()][spawn.getY()] = e.getTag();
         }
-  } else {
-        getBoard()[e.getPosition().getX()][e.getPosition().getY()] = e.getTag();
+        */
+    getBoard()[e.getPosition().getX()][e.getPosition().getY()] = e.getTag();
   }
 }

@@ -13,11 +13,12 @@ int main () {
 
   Board board (SIZE);
 
-  Point p (2,99);
+  Point p (2,12);
   Entity user ("User", p);
   cout << user.toString();
 
-  Entity target ("Target", p);
+  Point pp (2,9);
+  Entity target ("Target", pp);
   cout << target.toString();
 
   board.spawn(user);
