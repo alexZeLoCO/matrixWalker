@@ -2,11 +2,12 @@
 #define BOARD_H
 #include "Point.h"
 #include "Entity.h"
+#include "Tag.h"
 
 class Board {
 private:
   int size;
-  char **M;
+  Tag **M;
 
 public:
   Board (int size);
@@ -14,12 +15,12 @@ public:
   void setSize(int size);
   int getSize();
 
-  char** getBoard();
+  Tag** getBoard();
 
   void show ();
   void fill ();
 
-  void place (Entity old, Point n);
+  void move (Entity old, Point n);
   void spawn (Entity e);
 
   bool invalidPosition (Point p);

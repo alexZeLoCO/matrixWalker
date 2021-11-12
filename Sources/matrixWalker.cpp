@@ -3,6 +3,7 @@
 #include "Point.cpp"
 #include "Entity.cpp"
 #include "Board.cpp"
+#include "Tag.cpp"
 #include <string>
 
 #define SIZE 10

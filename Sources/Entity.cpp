@@ -1,4 +1,5 @@
 #include "../Headers/Entity.h"
+#include "../Headers/Tag.h"
 #include <iostream>
 #include <string>
 #include <sstream>
@@ -20,8 +21,8 @@ void Entity :: setPosition (Point position) {
   this->position.setY(position.getY());
 }
 
-void Entity :: setTag (char tag) {
-  this-> tag = tag;
+void Entity :: setTag (char c) {
+  this->tag.setTag(c);
 }
 
 string Entity :: getName () {
@@ -33,7 +34,7 @@ Point Entity :: getPosition () {
 }
 
 char Entity :: getTag () {
-  return this-> tag;
+  return this->tag.getTag();
 }
 
 string Entity :: toString () {

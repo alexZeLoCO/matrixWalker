@@ -1,11 +1,12 @@
 #include "../Headers/Board.h"
+#include "../Headers/Tag.h"
 #include <iostream>
 
 Board :: Board (int size) {
   setSize(size);
-  M = new char * [size];
+  M = new Tag * [size];
   for (int i = 0; i < size; i++) {
-    M[i] = new char [size];
+    M[i] = new Tag [size];
   }
   fill();
 }
@@ -18,14 +19,14 @@ int Board :: getSize () {
   return this-> size;
 }
 
-char** Board :: getBoard()  {
+Tag** Board :: getBoard()  {
   return this-> M;
 }
 
 void Board :: fill () {
   for (int i = 0; i < getSize(); i++) {
     for (int j = 0; j < getSize(); j++) {
-      getBoard()[i][j] = '0';
+      getBoard()[i][j].setTag('0');
     }
   }
 }
@@ -33,7 +34,7 @@ void Board :: fill () {
 void Board :: show () {
   for (int i = 0; i < getSize(); i++) {
     for (int j = 0; j < getSize(); j++) {
-      printf("%c ", getBoard()[i][j]);
+      printf("%c ", getBoard()[i][j].getTag());
     }
     printf("\n");
   }
@@ -43,7 +44,7 @@ void Board :: show () {
 bool Board :: invalidPosition (Point p) {
 
   if(isOutOfBounds(p)) return true;
-  if (getBoard()[p.getX()][p.getY()] != '0') return true;
+  if (getBoard()[p.getX()][p.getY()].getTag() != '0') return true;
 
   return false;
   //return  ((p.getX() > getSize()) || (p.getY() > getSize()) || (getBoard()[p.getX()][p.getY()] != '0'));
@@ -150,26 +151,16 @@ Point Board :: spawnInBorder (Point p) {
 }
 
 void Board :: spawn (Entity e) {
-  printf("Spawning ");
-  cout << e.toString();
+
   if (invalidPosition(e.getPosition())) {
-    printf("Invalid due to ");
-    //do {
+    do {
       if (isOutOfBounds(e.getPosition())) {
-        printf("Out of Bounds\n");
         e.setPosition (spawnInBorder(e.getPosition()));
       } else {
-        printf("Overlapping entity\n");
         e.setPosition (spawnNearby(e.getPosition()));
       }
-    //} while (invalidPosition(e.getPosition()));
-      /*
-        //Invalid spawn position. Check adyacent spots.
-        Point spawn (std::move(spawnNearby(e.getPosition())));
-        if (!invalidPosition(std::move(spawn))) {
-          getBoard()[spawn.getX()][spawn.getY()] = e.getTag();
-        }
-        */
-    getBoard()[e.getPosition().getX()][e.getPosition().getY()] = e.getTag();
+    } while (invalidPosition(e.getPosition()));
+
+    getBoard()[e.getPosition().getX()][e.getPosition().getY()].setTag(e.getTag());
   }
 }
