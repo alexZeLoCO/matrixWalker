@@ -1,3 +1,3 @@
 
-g++ .\Sources\matrixWalker.cpp -o matrixWalker.exe
+@g++ .\Sources\matrixWalker.cpp -o matrixWalker.exe
 .\matrixWalker.exe

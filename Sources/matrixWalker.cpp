@@ -13,7 +13,7 @@ int main () {
 
   Board board (SIZE);
 
-  Point p (2,2);
+  Point p (2,99);
   Entity user ("User", p);
   cout << user.toString();
 
@@ -24,6 +24,4 @@ int main () {
   board.spawn(target);
 
   board.show();
-
-  return 1;
 }

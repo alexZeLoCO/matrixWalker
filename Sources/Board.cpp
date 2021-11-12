@@ -41,15 +41,10 @@ void Board :: show () {
 }
 
 bool Board :: invalidPosition (Point&& p) {
-  if (p.getX() > getSize()) {
-    return true;
-  }
-  if (p.getY() > getSize()) {
-    return false;
-  }
-  if (getBoard()[p.getX()][p.getY()] != '0') {
-    return false;
-  }
+
+  if(getSize() > p.getX() || getSize() > p.getY()) return false;
+  if (getBoard()[p.getX()][p.getY()] != '0') return false;
+  
   return true;
   //return  ((p.getX() > getSize()) || (p.getY() > getSize()) || (getBoard()[p.getX()][p.getY()] != '0'));
 }
