@@ -1,5 +1,4 @@
 #include <iostream>
-//#include "../Utility/testing.h"
 #include "Point.cpp"
 #include "Entity.cpp"
 #include "Board.cpp"
@@ -35,16 +34,18 @@ int main () {
 
   Board board (SIZE, M);
 
-  Point p (2,12);
-  Entity user ("User", p);
-  cout << user.toString();
+  Point p (SIZE);
+  Point pp (SIZE);
 
-  Point pp (2,9);
+  Entity user ("User", p);
   Entity target ("Target", pp);
-  cout << target.toString();
 
   board.spawn(user);
   board.spawn(target);
 
+  cout << user.toString();
+  cout << target.toString();
+
   board.show();
+
 }

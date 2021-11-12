@@ -9,6 +9,7 @@ private:
   int y;
 
 public:
+ Point (int max);
  Point (int x, int y);
  Point (Point&& p);
  Point (Point &p);
