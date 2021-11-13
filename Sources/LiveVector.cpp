@@ -42,7 +42,7 @@ void LiveVector :: add (Entity e) {
     this->setSize(this->getSize()+1);
     Entity es [this->getSize()];
     for (int i = 0; i < this->getSize()-1 ; i++) {
-      es[i] = this->getEntity(i);
+      es[i] = this->getEntity(i); 
     }
     es[this->getSize()] = e;
     this->V=es;
