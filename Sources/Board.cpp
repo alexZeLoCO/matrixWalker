@@ -1,5 +1,6 @@
 #include "../Headers/Board.h"
 #include "../Headers/Tag.h"
+#include "../Headers/Pathfinder.h"
 #include <iostream>
 
 Board :: Board (int size) {
@@ -173,4 +174,33 @@ void Board :: spawn (Entity e) {
     } while (invalidPosition(e.getPosition()));
   }
     getBoard()[e.getPosition().getX()][e.getPosition().getY()].setTag(e.getTag());
+}
+
+void Board :: move (Pathfinder old) {
+  Point test (spawnNearby((old.getPosition())));
+  bool dir [4];
+  if (test.getX()-old.getPosition().getX()>0) {
+    dir[0]=1;
+  }
+  if (test.getX()-old.getPosition().getX()<0) {
+    dir[2]=1;
+  }
+  if (test.getY()-old.getPosition().getY()>0) {
+    dir[1]=1;
+  }
+  if (test.getY()-old.getPosition().getY()<0) {
+    dir[3]=1;
+  }
+  if (dir[0]) {
+    old.north();
+  }
+  if (dir[1]) {
+    old.east();
+  }
+  if (dir[2]) {
+    old.south();
+  }
+  if (dir[3]) {
+    old.west();
+  }
 }

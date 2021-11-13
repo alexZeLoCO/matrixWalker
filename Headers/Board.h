@@ -3,6 +3,7 @@
 #include "Point.h"
 #include "Entity.h"
 #include "Tag.h"
+#include "Pathfinder.h"
 
 class Board {
 private:
@@ -21,7 +22,7 @@ public:
   void show ();
   void fill ();
 
-  void move (Entity old, Point n);
+  void move (Pathfinder old);
   void spawn (Entity e);
 
   bool invalidPosition (Point p);

@@ -3,6 +3,7 @@
 #include "Entity.cpp"
 #include "Board.cpp"
 #include "Tag.cpp"
+#include "Pathfinder.cpp"
 #include <string>
 
 #define SIZE 10
@@ -34,7 +35,7 @@ int main () {
 
   Board board (SIZE, M);
 
-  Entity user ("User", SIZE);
+  Pathfinder user ("User", SIZE);
   Entity target ("Target", SIZE);
 
   board.spawn(user);
@@ -43,6 +44,9 @@ int main () {
   cout << user.toString();
   cout << target.toString();
 
+  board.show();
+  board.move(user);
+  cout << user.toString();
   board.show();
 
 }
