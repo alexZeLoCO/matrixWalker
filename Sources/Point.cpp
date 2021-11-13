@@ -7,8 +7,8 @@
 using namespace std;
 
 Point :: Point (int max) {
-  setX(rand() % (max));
-  setY(rand() % (max));
+  setX((int) (rand() % (max)));
+  setY((int) (rand() % (max)));
 }
 
 Point :: Point (int x, int y) {

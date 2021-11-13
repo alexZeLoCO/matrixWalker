@@ -160,8 +160,8 @@ Point Board :: spawnInBorder (Point p) {
 }
 
 void Board :: spawn (Entity e) {
-
   if (invalidPosition(e.getPosition())) {
+    cout << "invalid" << endl;
     do {
       if (isOutOfBounds(e.getPosition())) {
         e.setPosition (spawnInBorder(e.getPosition()));
@@ -169,7 +169,7 @@ void Board :: spawn (Entity e) {
         e.setPosition (spawnNearby(e.getPosition()));
       }
     } while (invalidPosition(e.getPosition()));
-
+    cout << "Spawning " << e.getName()  << " in " << e.getPosition().toString() << " as " << e.getTag() << endl;
     getBoard()[e.getPosition().getX()][e.getPosition().getY()].setTag(e.getTag());
   }
 }
