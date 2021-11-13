@@ -2,13 +2,14 @@
 #include <iostream>
 #include <string>
 #include <sstream>
-#include <math.h>
+#include <random>
 
 using namespace std;
 
 Point :: Point (int max) {
-  setX((int) (rand() % (max)));
-  setY((int) (rand() % (max)));
+  mt19937 mt_rand (time(0));
+  setX(mt_rand() % max);
+  setY(mt_rand() % max);
 }
 
 Point :: Point (int x, int y) {
