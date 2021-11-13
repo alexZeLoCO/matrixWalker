@@ -32,17 +32,16 @@ int main () {
     }
   }
 
-  Board board (SIZE);
+  Board board (SIZE, M);
 
-  Point p (1,7);
+  Entity user ("User", SIZE);
+  Entity target ("Target", SIZE);
 
-  Entity user ("User", p);
-
-  cout << user.toString() << endl;
-  cout << "Spawning..." << endl;
   board.spawn(user);
+  board.spawn(target);
 
   cout << user.toString();
+  cout << target.toString();
 
   board.show();
 
