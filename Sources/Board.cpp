@@ -20,7 +20,20 @@ Board :: Board (int size, Tag ** B) {
         M[i][j] = B[i][j];
       }
     }
+}
 
+Board :: Board (int size, Tag ** B, Entity * V, int entities) {
+    setSize(size);
+    M = new Tag * [size];
+    for (int i = 0; i < size; i++) {
+      M[i] = new Tag [size];
+      for (int j = 0; j < size ; j++) {
+        M[i][j] = B[i][j];
+      }
+    }
+    for (int i = 0; i < entities ; i++) {
+      this->spawn(V[i]);
+    }
 }
 
 void Board :: setSize (int size) {

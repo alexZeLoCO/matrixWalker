@@ -11,13 +11,16 @@ private:
   Tag tag;
 
 public:
+  Entity ();
   Entity (string name, Point position);
 
   Point getPosition();
   string getName();
 
   void setPosition(Point position);
+  void setPosition();
   void setName(string name);
+
 
   void setTag(char tag);
   char getTag();

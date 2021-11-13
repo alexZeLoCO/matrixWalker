@@ -8,13 +8,16 @@ class Board {
 private:
   int size;
   Tag **M;
+  Entity *V;
 
 public:
   Board (int size);
   Board (int size, Tag **B);
+  Board (int size, Tag **B, Entity *V, int entities);
 
   void setSize(int size);
   int getSize();
+  Entity* getEntities();
 
   Tag** getBoard();
 

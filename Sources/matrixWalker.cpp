@@ -3,6 +3,7 @@
 #include "Entity.cpp"
 #include "Board.cpp"
 #include "Tag.cpp"
+#include "LiveVector.cpp"
 #include <string>
 
 #define SIZE 10
@@ -10,7 +11,11 @@
 using namespace std;
 
 int main () {
-
+  LiveVector lv ();
+  Entity user ("User", SIZE);
+  lv.add(user);
+  lv.toString();
+/*
   Tag ** M = new Tag * [SIZE];
   for (int i = 0; i < SIZE; i++) {
     M[i] = new Tag [SIZE];
@@ -32,17 +37,19 @@ int main () {
     }
   }
 
-  Board board (SIZE, M);
-
   Entity user ("User", SIZE);
   Entity target ("Target", SIZE);
+  Entity Ve [2];
+  Ve[0] = user;
+  Ve[1] = target;
 
-  board.spawn(user);
-  board.spawn(target);
+  Board board (SIZE, M, Ve, 2);
+  //board.spawn(user);
+  //board.spawn(target);
 
-  cout << user.toString();
-  cout << target.toString();
+  //cout << user.toString();
+  //cout << target.toString();
 
   board.show();
-
+*/
 }

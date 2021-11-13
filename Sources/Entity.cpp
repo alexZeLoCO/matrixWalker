@@ -5,7 +5,11 @@
 #include <sstream>
 
 using namespace std;
-
+Entity :: Entity () {
+  setName("NotProvided");
+  setPosition();
+  setTag('N');
+}
 Entity :: Entity (string name, Point position) {
   setName(name);
   setPosition(position);
@@ -19,6 +23,11 @@ void Entity :: setName (string name) {
 void Entity :: setPosition (Point position) {
   this->position.setX(position.getX());
   this->position.setY(position.getY());
+}
+
+void Entity :: setPosition () {
+  this->position.setX(0);
+  this->position.setY(0);
 }
 
 void Entity :: setTag (char c) {
