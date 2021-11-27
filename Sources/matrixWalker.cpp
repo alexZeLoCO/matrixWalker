@@ -29,7 +29,7 @@ int main () {
   int idx = 0;
   for (int i = 0; i < SIZE ; i++) {
     for (int j = 0; j < SIZE ; j++) {
-      M[j][i] = V[idx++];
+      M[i][j] = V[idx++];
     }
   }
 
@@ -46,10 +46,17 @@ int main () {
 
   board.show();
 
-  board.move(&user, 6);
-  board.move(&user, 6);
   board.move(&user, 2);
+  board.move(&user, 2);
+  board.move(&user, 6);
+  board.move(&user, 4);
   board.move(&user, 8);
+  board.move(&user, 3);
+  board.move(&user, 2);
+  board.move(&user, 1);
+  board.move(&user, 9);
+  board.move(&user, 7);
+  board.move(&user, 9);
   board.show();
 
 }

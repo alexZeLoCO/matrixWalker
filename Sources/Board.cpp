@@ -170,40 +170,49 @@ void Board :: spawn (Entity e) {
   6 ==> East (Right)
   2 ==> South (Below)
   4 ==> West (Left)
+  7 ==> North West (Above Left)
+  9 ==> North East (Above Right)
+  1 ==> South West (Below Left)
+  3 ==> South East (Below Right)
 
   If the new position is not valid, the previous position is restored.
 */
 void Board :: move (Pathfinder *p, int dir) {
   Point backup (p->getPosition());
   bool swapped = true;
+
+  //Updating position
   if (dir == 8) {
     p->north();
-    if (!validPosition(p->getPosition(), *this)) {
-      p->setPosition(backup);
-      swapped = false;
-    }
   }
   if (dir == 6) {
     p->east();
-    if (!validPosition(p->getPosition(), *this)) {
-      p->setPosition(backup);
-      swapped = false;
-    }
   }
   if (dir == 2) {
     p->south();
-    if (!validPosition(p->getPosition(), *this)) {
-      p->setPosition(backup);
-      swapped = false;
-    }
   }
   if (dir == 4) {
     p->west();
-    if (!validPosition(p->getPosition(), *this)) {
-      p->setPosition(backup);
-      swapped = false;
-    }
   }
+  if (dir == 7) {
+    p->northWest();
+  }
+  if (dir == 9) {
+    p->northEast();
+  }
+  if (dir == 1) {
+    p->southWest();
+  }
+  if (dir == 3) {
+    p->southEast();
+  }
+
+  //Validate postion
+  if (!validPosition(p->getPosition(), *this)) {
+    p->setPosition(backup);
+    swapped = false;
+  }
+
   if (swapped) {
     cout << p->toString() << endl;
     getBoard()[p->getX()][p->getY()] = p->getTag();

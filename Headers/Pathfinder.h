@@ -15,6 +15,10 @@ public:
   void south ();
   void east ();
   void west ();
+  void northWest ();
+  void northEast ();
+  void southWest ();
+  void southEast ();
   
 };
 
