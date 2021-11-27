@@ -22,6 +22,11 @@ public:
   void setTag(char tag);
   char getTag();
 
+  void setX (int x);
+  void setY (int y);
+  int getX();
+  int getY();
+
   string toString();
 };
 

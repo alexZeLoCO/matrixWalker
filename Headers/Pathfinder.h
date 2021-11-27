@@ -15,7 +15,7 @@ public:
   void south ();
   void east ();
   void west ();
-
+  
 };
 
 #endif // PATHFINDER_H

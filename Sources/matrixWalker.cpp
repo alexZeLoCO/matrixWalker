@@ -29,14 +29,14 @@ int main () {
   int idx = 0;
   for (int i = 0; i < SIZE ; i++) {
     for (int j = 0; j < SIZE ; j++) {
-      M[i][j] = V[idx++];
+      M[j][i] = V[idx++];
     }
   }
 
   Board board (SIZE, M);
 
-  Pathfinder user ("User", SIZE);
-  Entity target ("Target", SIZE);
+  Pathfinder user ("User", *(new Point (0,0)));
+  Entity target ("Target", *(new Point (SIZE-1, SIZE-1)));
 
   board.spawn(user);
   board.spawn(target);
@@ -45,8 +45,11 @@ int main () {
   cout << target.toString();
 
   board.show();
-  board.move(user);
-  cout << user.toString();
+
+  board.move(&user, 6);
+  board.move(&user, 6);
+  board.move(&user, 2);
+  board.move(&user, 8);
   board.show();
 
 }

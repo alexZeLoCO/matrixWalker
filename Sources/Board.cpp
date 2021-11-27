@@ -1,6 +1,7 @@
 #include "../Headers/Board.h"
 #include "../Headers/Tag.h"
 #include "../Headers/Pathfinder.h"
+#include "../Headers/LogicModule.h"
 #include <iostream>
 
 Board :: Board (int size) {
@@ -54,19 +55,6 @@ void Board :: show () {
   printf("\n");
 }
 
-bool Board :: invalidPosition (Point p) {
-
-  if(isOutOfBounds(p)) return true;
-  if (getBoard()[p.getX()][p.getY()].getTag() != '0') return true;
-
-  return false;
-  //return  ((p.getX() > getSize()) || (p.getY() > getSize()) || (getBoard()[p.getX()][p.getY()] != '0'));
-}
-
-bool Board :: isOutOfBounds (Point p) {
-    return getSize() < p.getX() || getSize() < p.getY() || p.getX() < 0 || p.getY() < 0;
-}
-
 Point Board :: spawnNearby(Point p) {
   bool invalid = true;   //Sentinel
 
@@ -79,7 +67,7 @@ https://www.fluentcpp.com/2018/02/06/understanding-lvalues-rvalues-and-their-ref
   for (int i=1; i<getSize() && invalid ; i++) {
     //Checking right
     test.setY(p.getY() + i);
-    if (!invalidPosition(test)) {
+    if (validPosition(test, *this)) {
       invalid = false;
       output.setPosition(test);
       break;
@@ -87,7 +75,7 @@ https://www.fluentcpp.com/2018/02/06/understanding-lvalues-rvalues-and-their-ref
 
     //Checking left
     test.setY(p.getY() - i);
-    if (!invalidPosition(test)) {
+    if (validPosition(test, *this)) {
       invalid = false;
       output.setPosition(test);
       break;
@@ -96,7 +84,7 @@ https://www.fluentcpp.com/2018/02/06/understanding-lvalues-rvalues-and-their-ref
     test.setY(p.getY());  //Resetting Y
     //Checking below
     test.setX(p.getX() - i);
-    if (!invalidPosition(test)) {
+    if (validPosition(test, *this)) {
       invalid = false;
       output.setPosition(test);
       break;
@@ -104,7 +92,7 @@ https://www.fluentcpp.com/2018/02/06/understanding-lvalues-rvalues-and-their-ref
 
     //Checking above
     test.setX(p.getX() + i);
-    if (!invalidPosition(test)) {
+    if (validPosition(test, *this)) {
       invalid = true;
       output.setPosition(test);
       break;
@@ -113,7 +101,7 @@ https://www.fluentcpp.com/2018/02/06/understanding-lvalues-rvalues-and-their-ref
     //Checking bottom right
     test.setX(p.getX() - i);
     test.setY(p.getY() + i);
-    if (!invalidPosition(test)) {
+    if (validPosition(test, *this)) {
       invalid = true;
       output.setPosition(test);
       break;
@@ -121,7 +109,7 @@ https://www.fluentcpp.com/2018/02/06/understanding-lvalues-rvalues-and-their-ref
 
     //Checking top left
     test.setX(p.getX() + i);
-    if (!invalidPosition(test)) {
+    if (validPosition(test, *this)) {
       invalid = true;
       output.setPosition(test);
       break;
@@ -129,7 +117,7 @@ https://www.fluentcpp.com/2018/02/06/understanding-lvalues-rvalues-and-their-ref
 
     //Checking bottom left
     test.setY(p.getY() - i);
-    if (!invalidPosition(test)) {
+    if (validPosition(test, *this)) {
       invalid = true;
       output.setPosition(test);
       break;
@@ -137,7 +125,7 @@ https://www.fluentcpp.com/2018/02/06/understanding-lvalues-rvalues-and-their-ref
 
     //Checking bottom left
     test.setX(p.getX() - i);
-    if (!invalidPosition(test)) {
+    if (validPosition(test, *this)) {
       invalid = true;
       output.setPosition(test);
       break;
@@ -164,43 +152,61 @@ Point Board :: spawnInBorder (Point p) {
 }
 
 void Board :: spawn (Entity e) {
-  if (invalidPosition(e.getPosition())) {
+  if (!validPosition(e.getPosition(), *this)) {
     do {
-      if (isOutOfBounds(e.getPosition())) {
+      if (isOutOfBounds(e.getPosition(), *this)) {
         e.setPosition (spawnInBorder(e.getPosition()));
       } else {
         e.setPosition (spawnNearby(e.getPosition()));
       }
-    } while (invalidPosition(e.getPosition()));
+    } while (!validPosition(e.getPosition(), *this));
   }
     getBoard()[e.getPosition().getX()][e.getPosition().getY()].setTag(e.getTag());
 }
 
-void Board :: move (Pathfinder old) {
-  Point test (spawnNearby((old.getPosition())));
-  bool dir [4];
-  if (test.getX()-old.getPosition().getX()>0) {
-    dir[0]=1;
+/**
+  Moves the pathfinder p in the dir direction. Possible directions according to a numpad:
+  8 ==> North (Above)
+  6 ==> East (Right)
+  2 ==> South (Below)
+  4 ==> West (Left)
+
+  If the new position is not valid, the previous position is restored.
+*/
+void Board :: move (Pathfinder *p, int dir) {
+  Point backup (p->getPosition());
+  bool swapped = true;
+  if (dir == 8) {
+    p->north();
+    if (!validPosition(p->getPosition(), *this)) {
+      p->setPosition(backup);
+      swapped = false;
+    }
   }
-  if (test.getX()-old.getPosition().getX()<0) {
-    dir[2]=1;
+  if (dir == 6) {
+    p->east();
+    if (!validPosition(p->getPosition(), *this)) {
+      p->setPosition(backup);
+      swapped = false;
+    }
   }
-  if (test.getY()-old.getPosition().getY()>0) {
-    dir[1]=1;
+  if (dir == 2) {
+    p->south();
+    if (!validPosition(p->getPosition(), *this)) {
+      p->setPosition(backup);
+      swapped = false;
+    }
   }
-  if (test.getY()-old.getPosition().getY()<0) {
-    dir[3]=1;
+  if (dir == 4) {
+    p->west();
+    if (!validPosition(p->getPosition(), *this)) {
+      p->setPosition(backup);
+      swapped = false;
+    }
   }
-  if (dir[0]) {
-    old.north();
-  }
-  if (dir[1]) {
-    old.east();
-  }
-  if (dir[2]) {
-    old.south();
-  }
-  if (dir[3]) {
-    old.west();
+  if (swapped) {
+    cout << p->toString() << endl;
+    getBoard()[p->getX()][p->getY()] = p->getTag();
+    getBoard()[backup.getX()][backup.getY()] = '0';
   }
 }

@@ -22,11 +22,9 @@ public:
   void show ();
   void fill ();
 
-  void move (Pathfinder old);
+  void move (Pathfinder *p, int dir);
   void spawn (Entity e);
 
-  bool invalidPosition (Point p);
-  bool isOutOfBounds (Point p);
   Point spawnNearby(Point p);
   Point spawnInBorder (Point p);
 };
