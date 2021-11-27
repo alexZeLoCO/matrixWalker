@@ -15,6 +15,7 @@ int main () {
   for (int i = 0; i < SIZE; i++) {
     M[i] = new Tag [SIZE];
   }
+
   Tag V [SIZE*SIZE] = {'0','1','0','0','0','0','0','0','0','0',
                        '0','1','0','0','0','0','0','0','0','0',
                        '0','0','1','0','0','0','0','0','1','1',
@@ -25,6 +26,7 @@ int main () {
                        '0','0','1','0','1','1','1','0','1','0',
                        '0','0','1','0','0','0','0','0','1','0',
                        '0','0','1','0','0','0','0','0','1','0'};
+
   int idx = 0;
   for (int i = 0; i < SIZE ; i++) {
     for (int j = 0; j < SIZE ; j++) {
@@ -34,8 +36,8 @@ int main () {
 
   Board board (SIZE, M);
 
-  Entity user ("User", SIZE);
-  Entity target ("Target", SIZE);
+  Entity user ("User", *(new Point (0, 0)));
+  Entity target ("Target", *(new Point (SIZE-1, SIZE-1)));
 
   board.spawn(user);
   board.spawn(target);
