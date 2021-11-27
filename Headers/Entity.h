@@ -2,13 +2,13 @@
 #define ENTITY_H
 
 #include "Point.h"
-#include "Tag.h"
+#include "Node.h"
 
 class Entity {
 private:
   Point position;
   string name;
-  Tag tag;
+  Node Node;
 
 public:
   Entity (string name, Point position);
@@ -19,8 +19,8 @@ public:
   void setPosition(Point position);
   void setName(string name);
 
-  void setTag(char tag);
-  char getTag();
+  void setNode(char Node);
+  char getNode();
 
   void setX (int x);
   void setY (int y);

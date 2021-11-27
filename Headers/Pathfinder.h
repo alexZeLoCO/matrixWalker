@@ -19,7 +19,7 @@ public:
   void northEast ();
   void southWest ();
   void southEast ();
-  
+
 };
 
 #endif // PATHFINDER_H

@@ -8,7 +8,7 @@ bool isOutOfBounds (Point p, Board b) {
 bool validPosition (Point p, Board b) {
 
   if(isOutOfBounds(p, b)) return false;
-  if (b.getBoard()[p.getX()][p.getY()].getTag() != '0') return false;
+  if (b.getBoard()[p.getX()][p.getY()].getNode() != '0') return false;
 
   return true;
   //return  ((p.getX() > getSize()) || (p.getY() > getSize()) || (getBoard()[p.getX()][p.getY()] != '0'));

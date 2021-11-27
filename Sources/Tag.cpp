@@ -1,17 +1,17 @@
-#include "../Headers/Tag.h"
+#include "../Headers/Node.h"
 
-Tag :: Tag () {
-  setTag(0);
+Node :: Node () {
+  setNode(0);
 }
 
-Tag :: Tag (char c) {
-  setTag(c);
+Node :: Node (char c) {
+  setNode(c);
 }
 
-char Tag :: getTag () {
-  return this->tag;
+char Node :: getNode () {
+  return this->Node;
 }
 
-void Tag :: setTag (char c) {
-  this->tag = c;
+void Node :: setNode (char c) {
+  this->Node = c;
 }

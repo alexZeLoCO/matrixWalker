@@ -1,23 +1,23 @@
 #include "../Headers/Board.h"
-#include "../Headers/Tag.h"
+#include "../Headers/Node.h"
 #include "../Headers/Pathfinder.h"
 #include "../Headers/LogicModule.h"
 #include <iostream>
 
 Board :: Board (int size) {
   setSize(size);
-  M = new Tag * [size];
+  M = new Node * [size];
   for (int i = 0; i < size; i++) {
-    M[i] = new Tag [size];
+    M[i] = new Node [size];
   }
   fill();
 }
 
-Board :: Board (int size, Tag ** B) {
+Board :: Board (int size, Node ** B) {
     setSize(size);
-    M = new Tag * [size];
+    M = new Node * [size];
     for (int i = 0; i < size; i++) {
-      M[i] = new Tag [size];
+      M[i] = new Node [size];
       for (int j = 0; j < size ; j++) {
         M[i][j] = B[i][j];
       }
@@ -33,14 +33,14 @@ int Board :: getSize () {
   return this-> size;
 }
 
-Tag** Board :: getBoard()  {
+Node** Board :: getBoard()  {
   return this-> M;
 }
 
 void Board :: fill () {
   for (int i = 0; i < getSize(); i++) {
     for (int j = 0; j < getSize(); j++) {
-      getBoard()[i][j].setTag('0');
+      getBoard()[i][j].setNode('0');
     }
   }
 }
@@ -48,7 +48,7 @@ void Board :: fill () {
 void Board :: show () {
   for (int i = 0; i < getSize(); i++) {
     for (int j = 0; j < getSize(); j++) {
-      printf("%c ", getBoard()[i][j].getTag());
+      printf("%c ", getBoard()[i][j].getNode());
     }
     printf("\n");
   }
@@ -161,7 +161,7 @@ void Board :: spawn (Entity e) {
       }
     } while (!validPosition(e.getPosition(), *this));
   }
-    getBoard()[e.getPosition().getX()][e.getPosition().getY()].setTag(e.getTag());
+    getBoard()[e.getPosition().getX()][e.getPosition().getY()].setNode(e.getNode());
 }
 
 /**
@@ -215,7 +215,7 @@ void Board :: move (Pathfinder *p, int dir) {
 
   if (swapped) {
     cout << p->toString() << endl;
-    getBoard()[p->getX()][p->getY()] = p->getTag();
+    getBoard()[p->getX()][p->getY()] = p->getNode();
     getBoard()[backup.getX()][backup.getY()] = '0';
   }
 }

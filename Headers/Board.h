@@ -2,22 +2,22 @@
 #define BOARD_H
 #include "Point.h"
 #include "Entity.h"
-#include "Tag.h"
+#include "Node.h"
 #include "Pathfinder.h"
 
 class Board {
 private:
   int size;
-  Tag **M;
+  Node **M;
 
 public:
   Board (int size);
-  Board (int size, Tag **B);
+  Board (int size, Node **B);
 
   void setSize(int size);
   int getSize();
 
-  Tag** getBoard();
+  Node** getBoard();
 
   void show ();
   void fill ();

@@ -1,17 +1,17 @@
-#ifndef TAGS_H
-#define TAGS_H
+#ifndef NodeS_H
+#define NodeS_H
 
-class Tag {
+class Node {
 private:
-  char tag;
+  char Node;
 
 public:
-  Tag ();
-  Tag (char c);
+  Node ();
+  Node (char c);
 
-  char getTag();
-  void setTag(char c);
+  char getNode();
+  void setNode(char c);
 
 };
 
-#endif // TAGS_H
+#endif // NodeS_H

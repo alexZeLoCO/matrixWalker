@@ -1,5 +1,5 @@
 #include "../Headers/Entity.h"
-#include "../Headers/Tag.h"
+#include "../Headers/Node.h"
 
 #include <iostream>
 #include <string>
@@ -10,7 +10,7 @@ using namespace std;
 Entity :: Entity (string name, Point position) {
   setName(name);
   setPosition(position);
-  setTag(name[0]);
+  setNode(name[0]);
 }
 
 void Entity :: setName (string name) {
@@ -22,8 +22,8 @@ void Entity :: setPosition (Point position) {
   this->position.setY(position.getY());
 }
 
-void Entity :: setTag (char c) {
-  this->tag.setTag(c);
+void Entity :: setNode (char c) {
+  this->Node.setNode(c);
 }
 
 string Entity :: getName () {
@@ -34,8 +34,8 @@ Point Entity :: getPosition () {
   return this-> position;
 }
 
-char Entity :: getTag () {
-  return this->tag.getTag();
+char Entity :: getNode () {
+  return this->Node.getNode();
 }
 
 void Entity :: setX (int x) {
@@ -58,7 +58,7 @@ string Entity :: toString () {
   ostringstream buffer;
   buffer <<
   "Entity:\n" <<
-  "\tName: " << getName() << " (" << getTag() << ")\n" <<
+  "\tName: " << getName() << " (" << getNode() << ")\n" <<
   "\tPosition: " << getPosition().toString() << "\n";
 
   return buffer.str();
