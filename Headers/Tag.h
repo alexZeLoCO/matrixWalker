@@ -4,6 +4,8 @@
 class Node {
 private:
   char Node;
+  int gCost;
+  int hCost;
 
 public:
   Node ();
@@ -12,6 +14,9 @@ public:
   char getNode();
   void setNode(char c);
 
+  void setup (Board b);
+
+  
 };
 
 #endif // NodeS_H
