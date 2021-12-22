@@ -3,10 +3,11 @@ import java.util.Iterator;
 
 public class Board<E> implements Iterable<E> {
     static private final int DEFAULT_SIZE = 10;
-
     private final E defaultElement;
 
+    private E[][] back;
     private E[][] data;
+    private Members<Character> members;
     private int rows;
     private int cols;
 
@@ -33,6 +34,13 @@ public class Board<E> implements Iterable<E> {
         this.defaultElement = defaultElement;
         this.data = (E[][]) new Object[rows][cols];
         this.fill();
+        this.members = new Members<Character>();
+        this.back = (E[][]) new Object[rows][cols];
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                this.back[i][j] = this.data[i][j];
+            }
+        }
     }
 
     /**
@@ -45,9 +53,48 @@ public class Board<E> implements Iterable<E> {
      * @param defaultElement Element to be used as null
      */
     public Board(int rows, int cols, E[][] data, E defaultElement) {
-        this(defaultElement);
+        this(rows, cols, defaultElement);
         this.setData(data);
         this.fill();
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                this.back[i][j] = this.data[i][j];
+            }
+        }
+    }
+
+    public Members<Character> getCharacters() {
+        return this.members;
+    }
+
+    public int getNCharacters() {
+        return this.members.getNElements();
+    }
+
+    @SuppressWarnings("unchecked")
+    public boolean spawn(Character c) {
+        if (c == null) {
+            throw new NullPointerException();
+        }
+        if (this.legalPosition(c.getPosition()) && this.members.add(c) && this.add((E) c)) {
+            return true;
+        }
+        return false;
+    }
+
+    @SuppressWarnings("unchecked")
+    public boolean move(Pathfinder c, Position p) {
+        if (c == null || p == null) {
+            throw new NullPointerException();
+        }
+        if (this.legalPosition(p) && !this.members.contains(c)) {
+            this.getData()[c.getY()][c.getX()] = this.back[c.getY()][c.getX()];
+            c.setX(p.getX());
+            c.setY(p.getY());
+            this.getData()[c.getX()][c.getY()] = (E) c;
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -305,6 +352,7 @@ public class Board<E> implements Iterable<E> {
 
     }
 
+    // -------GAME LOGIC--------
     /**
      * Checks if the position provided is legal or not
      * 
@@ -332,6 +380,7 @@ public class Board<E> implements Iterable<E> {
         return this.legalPosition(p.getX(), p.getY());
     }
 
+    // -------I/O--------
     /**
      * Outputs the board on the console with board format, only the characters
      */

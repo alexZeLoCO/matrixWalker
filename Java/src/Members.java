@@ -40,8 +40,21 @@ public class Members<E> extends ArrayList<E> {
         if (this.contains(e)) {
             return false;
         }
+        if (this.nElements == this.size() - 1) {
+            this.resize(2);
+        }
         this.data.add(e);
         this.nElements++;
+        return true;
+    }
+
+    public boolean resize(int multiplier) {
+        if (multiplier < 1) {
+            throw new IllegalArgumentException();
+        }
+        ArrayList<E> neu = new ArrayList<E>(this.size() * multiplier);
+        neu.addAll(this.data);
+        this.data = neu;
         return true;
     }
 
