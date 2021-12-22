@@ -1,22 +1,19 @@
-#ifndef NodeS_H
-#define NodeS_H
+#ifndef TAG_H
+#define TAG_h
 
-class Node {
+class Tag
+{
 private:
-  char Node;
-  int gCost;
-  int hCost;
+  char tag;
 
 public:
-  Node ();
-  Node (char c);
+  Tag();
+  Tag(char c);
 
   char getNode();
   void setNode(char c);
 
-  void setup (Board b);
-
-  
+  //void setup (Board b);
 };
 
 #endif // NodeS_H
