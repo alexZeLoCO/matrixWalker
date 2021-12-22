@@ -1,3 +1,6 @@
+/**
+ * Representation of an Entity, which can be a moving or inmutable being.
+ */
 public class Entity {
     private String name;
     private char tag;

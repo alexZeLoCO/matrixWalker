@@ -1,3 +1,6 @@
+/**
+ * Representation of a position in a plane of coordinates
+ */
 public class Position {
     int x;
     int y;

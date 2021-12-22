@@ -1,6 +1,10 @@
 import java.util.ArrayList;
 import java.util.Iterator;
 
+/**
+ * Representation of a Game Board, keeps track of Characters, Game Logic, Rules
+ * and Movement.
+ */
 public class Board<E> implements Iterable<E> {
     static private final int DEFAULT_SIZE = 10;
     private final E defaultElement;
@@ -63,14 +67,30 @@ public class Board<E> implements Iterable<E> {
         }
     }
 
+    /**
+     * Returns the characters array
+     * 
+     * @return Array containing the characters in game
+     */
     public Members<Character> getCharacters() {
         return this.members;
     }
 
+    /**
+     * Returns the number of characters in game
+     * 
+     * @return Number of characters in game
+     */
     public int getNCharacters() {
         return this.members.getNElements();
     }
 
+    /**
+     * Spawns a new character in the board
+     * 
+     * @param c Character to be spawned
+     * @return True if the character was spawned successfully
+     */
     @SuppressWarnings("unchecked")
     public boolean spawn(Character c) {
         if (c == null) {
@@ -82,6 +102,13 @@ public class Board<E> implements Iterable<E> {
         return false;
     }
 
+    /**
+     * Moves the Pathfinder to the position if it is legal
+     * 
+     * @param c Pathfinder to be moved
+     * @param p New position
+     * @return True if the Pathfinder was moved successfully
+     */
     @SuppressWarnings("unchecked")
     public boolean move(Pathfinder c, Position p) {
         if (c == null || p == null) {

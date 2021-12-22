@@ -1,3 +1,6 @@
+/**
+ * Representation of a Character, an Entity that can move.
+ */
 public class Character extends Entity {
 
     /**

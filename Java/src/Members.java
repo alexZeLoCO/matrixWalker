@@ -1,20 +1,37 @@
 import java.util.ArrayList;
 import java.util.Iterator;
 
+/**
+ * Representation of variable-size list of Characters
+ */
 public class Members<E> extends ArrayList<E> {
 
     private static final int DEFAULT_SIZE = 3;
     private ArrayList<E> data;
     private int nElements;
 
+    /**
+     * Default constructor
+     */
     public Members() {
         this(DEFAULT_SIZE);
     }
 
+    /**
+     * Sized constructor
+     * 
+     * @param size Size of the array
+     */
     public Members(int size) {
         this.data = new ArrayList<E>(size);
     }
 
+    /**
+     * Sized constructor with starting content
+     * 
+     * @param size Size of the array
+     * @param e    Elements to be added to the array
+     */
     @SafeVarargs
     public Members(int size, E... e) {
         this(size);
@@ -23,15 +40,31 @@ public class Members<E> extends ArrayList<E> {
         }
     }
 
+    /**
+     * Copy constructor
+     * 
+     * @param al ArrayList to be copied
+     */
     public Members(ArrayList<E> al) {
         this(al.size());
         this.addAll(al);
     }
 
+    /**
+     * Returns the number of elements in this array
+     * 
+     * @return Number of elements int his array
+     */
     public int getNElements() {
         return this.nElements;
     }
 
+    /**
+     * Adds the element to the array if it is not already in. Resizes if needed.
+     * 
+     * @param e Element to be added
+     * @return True if the element was added successfully
+     */
     @Override
     public boolean add(E e) {
         if (e == null) {
@@ -48,6 +81,12 @@ public class Members<E> extends ArrayList<E> {
         return true;
     }
 
+    /**
+     * Increses the size of the array by a given multiplier
+     * 
+     * @param multiplier Times the size will be incremented
+     * @return True if the size was incremented successfully
+     */
     public boolean resize(int multiplier) {
         if (multiplier < 1) {
             throw new IllegalArgumentException();
@@ -58,6 +97,12 @@ public class Members<E> extends ArrayList<E> {
         return true;
     }
 
+    /**
+     * Removes the element from the array if possible
+     * 
+     * @param e Element to be removed
+     * @return True if the element was removed successfully
+     */
     @Override
     public boolean remove(Object e) {
         if (e == null) {
@@ -73,6 +118,12 @@ public class Members<E> extends ArrayList<E> {
         return false;
     }
 
+    /**
+     * Checks if the element is in the array
+     * 
+     * @param e Element to be searched
+     * @return True if the element was found in the array
+     */
     @Override
     public boolean contains(Object e) {
         if (e == null) {
@@ -86,6 +137,11 @@ public class Members<E> extends ArrayList<E> {
         return false;
     }
 
+    /**
+     * Returns an iterator
+     * 
+     * @return An iterator for this array
+     */
     @Override
     public Iterator<E> iterator() {
         return new MITR();
@@ -111,6 +167,9 @@ public class Members<E> extends ArrayList<E> {
 
     }
 
+    /**
+     * Outputs the elements of the array
+     */
     @Override
     public String toString() {
         return String.format("%s\n", this.data);
