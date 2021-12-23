@@ -13,15 +13,12 @@ public class App {
         Board<Entity> board = new Board<Entity>(map.length, map.length, map, new Entity("Floor"));
 
         Character Target = new Character("Target", 4, 3);
-        Pathfinder Pathfinder = new Pathfinder("Pathfinder", 0, 0);
+        Pathfinder Pathfinder = new Pathfinder("Pathfinder", 0, 0, board, Target.getPosition());
 
         board.spawn(Target);
         board.spawn(Pathfinder);
         board.show();
 
-        System.out.println("Moving pathfinder...");
-        board.move(Pathfinder, new Position(0, 1));
-        board.show();
-
+        System.out.println(Pathfinder);
     }
 }

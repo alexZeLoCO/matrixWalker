@@ -86,45 +86,6 @@ public class Board<E> implements Iterable<E> {
     }
 
     /**
-     * Spawns a new character in the board
-     * 
-     * @param c Character to be spawned
-     * @return True if the character was spawned successfully
-     */
-    @SuppressWarnings("unchecked")
-    public boolean spawn(Character c) {
-        if (c == null) {
-            throw new NullPointerException();
-        }
-        if (this.legalPosition(c.getPosition()) && this.members.add(c) && this.add((E) c)) {
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * Moves the Pathfinder to the position if it is legal
-     * 
-     * @param c Pathfinder to be moved
-     * @param p New position
-     * @return True if the Pathfinder was moved successfully
-     */
-    @SuppressWarnings("unchecked")
-    public boolean move(Pathfinder c, Position p) {
-        if (c == null || p == null) {
-            throw new NullPointerException();
-        }
-        if (this.legalPosition(p) && !this.members.contains(c)) {
-            this.getData()[c.getY()][c.getX()] = this.back[c.getY()][c.getX()];
-            c.setX(p.getX());
-            c.setY(p.getY());
-            this.getData()[c.getX()][c.getY()] = (E) c;
-            return true;
-        }
-        return false;
-    }
-
-    /**
      * Returns the Default Element of the Board, this will be used as null.
      * 
      * @return Defaul element of the board.
@@ -221,6 +182,9 @@ public class Board<E> implements Iterable<E> {
             throw new NullPointerException();
         }
         if (e instanceof Entity && this.legalPosition(((Entity) e).getPosition())) {
+            if (e instanceof Character && !this.members.contains((Character) e)) {
+                this.members.add((Character) e);
+            }
             return this.add(e, ((Entity) e).getX(), ((Entity) e).getY());
         }
         for (int i = 0; i < this.getRows(); i++) {
@@ -387,7 +351,7 @@ public class Board<E> implements Iterable<E> {
      * @param row Row to be checked
      * @return True if the position is in the board and is not already occuppied
      */
-    private boolean legalPosition(int col, int row) {
+    protected boolean legalPosition(int col, int row) {
         if (col < 0 || col > this.getCols() || row < 0 || row > this.getRows()) {
             return false;
         }
@@ -400,11 +364,79 @@ public class Board<E> implements Iterable<E> {
      * @param p Position to be checked
      * @return True if the position is in the board and is not already occuppied
      */
-    private boolean legalPosition(Position p) {
+    protected boolean legalPosition(Position p) {
         if (p == null) {
             throw new NullPointerException();
         }
         return this.legalPosition(p.getX(), p.getY());
+    }
+
+    // -------GAME PLAY--------
+    /**
+     * Spawns a new character in the board
+     * 
+     * @param c Character to be spawned
+     * @return True if the character was spawned successfully
+     */
+    @SuppressWarnings("unchecked")
+    public boolean spawn(Character c) {
+        if (c == null) {
+            throw new NullPointerException();
+        }
+        if (this.legalPosition(c.getPosition()) && this.members.add(c) && this.add((E) c)) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Moves the Pathfinder to the position if it is legal
+     * 
+     * @param c Pathfinder to be moved
+     * @param p New position
+     * @return True if the Pathfinder was moved successfully
+     */
+    @SuppressWarnings("unchecked")
+    public boolean move(Pathfinder c, Position p) {
+        if (c == null || p == null) {
+            throw new NullPointerException();
+        }
+        if (this.legalPosition(p) && this.members.contains(c)) {
+            this.getData()[c.getY()][c.getX()] = this.back[c.getY()][c.getX()];
+            c.setX(p.getX());
+            c.setY(p.getY());
+            this.getData()[c.getY()][c.getX()] = (E) c;
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Moves the Pathfinder once in a specific direction.
+     * 1 stands for South-West
+     * 2 stands for South
+     * 3 stands for South-East
+     * 4 stands for West
+     * 5 is not valid
+     * 6 stands for East
+     * 7 stands for North-West
+     * 8 stands for North
+     * 9 stands for North-East
+     * Any other number is not valid
+     * 
+     * @param c Pathfinder to be moved
+     * @param d Direction
+     * @return True if the pathfinder was moved successfully
+     */
+    public boolean move(Pathfinder c, int d) {
+        if (c == null) {
+            throw new NullPointerException();
+        }
+        if (d < 1 || d > 9 || d == 5) {
+            throw new IllegalArgumentException("Direction is not valid");
+        }
+
+        return this.move(c, Position.calculateNewPosition(c.getPosition(), d));
     }
 
     // -------I/O--------
