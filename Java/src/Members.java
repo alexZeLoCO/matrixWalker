@@ -41,6 +41,16 @@ public class Members<E> extends ArrayList<E> {
     }
 
     /**
+     * Starting content constructor
+     * 
+     * @param e Elements to tbe added to the array
+     */
+    @SafeVarargs
+    public Members(E... e) {
+        this(e.length, e);
+    }
+
+    /**
      * Copy constructor
      * 
      * @param al ArrayList to be copied
@@ -129,12 +139,40 @@ public class Members<E> extends ArrayList<E> {
         if (e == null) {
             throw new NullPointerException();
         }
-        for (int i = 0; i < this.size(); i++) {
+        for (int i = 0; i < this.getNElements(); i++) {
             if (this.data.get(i).equals(e)) {
                 return true;
             }
         }
         return false;
+    }
+
+    /**
+     * Checks if this members list is empty
+     * 
+     * @return True if there are no members in this list
+     */
+    public boolean isEmpty() {
+        for (E e : this) {
+            if (e != null) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Removes every element from this list
+     */
+    public void clear() {
+        if (this.data == null) {
+            throw new NullPointerException();
+        }
+
+        ArrayList<E> prevData = new ArrayList<E>(this.data);
+        for (E e : prevData) {
+            this.remove(e);
+        }
     }
 
     /**
@@ -172,6 +210,6 @@ public class Members<E> extends ArrayList<E> {
      */
     @Override
     public String toString() {
-        return String.format("%s\n", this.data);
+        return String.format("%s", this.data);
     }
 }

@@ -19,5 +19,9 @@ public class App {
         board.spawn(Pathfinder);
         board.show();
 
+        System.out.println("Moving pathfinder...");
+        board.move(Pathfinder, new Position(0, 1));
+        board.show();
+
     }
 }
