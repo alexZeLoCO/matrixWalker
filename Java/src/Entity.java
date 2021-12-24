@@ -102,6 +102,19 @@ public class Entity {
     }
 
     /**
+     * Sets the x and y coordinate of this entity according to and already existing
+     * position
+     * 
+     * @param p Already existing position
+     */
+    public void setPosition(Position p) {
+        if (p == null) {
+            throw new NullPointerException();
+        }
+        this.position.setPosition(p);
+    }
+
+    /**
      * Outputs the information of this entity "<name> (<tag>) at <position>"
      */
     @Override

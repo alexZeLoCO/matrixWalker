@@ -145,6 +145,21 @@ public class Costs implements Iterable<Pair<Position, ArrayList<Integer>>> {
         return this.getCostsOf(p).get(FCOST_POSITION);
     }
 
+    public Position getLowestFCost() {
+        if (this.data == null) {
+            throw new NullPointerException();
+        }
+        Position minP = new Position();
+        int minC = 0;
+        for (Pair<Position, ArrayList<Integer>> p : this.data) {
+            if (p.getKey().equals(new Position(0, 0)) || p.getValue().get(FCOST_POSITION) < minC) {
+                minP.setPosition(p.getKey());
+                minC = p.getValue().get(FCOST_POSITION);
+            }
+        }
+        return minP;
+    }
+
     @Override
     public Iterator<Pair<Position, ArrayList<Integer>>> iterator() {
         return new CITR();

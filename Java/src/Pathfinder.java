@@ -233,15 +233,38 @@ public class Pathfinder extends Character {
         if (!this.hasTarget()) {
             throw new IllegalStateException("This Pathfinder has no Target");
         }
-        ArrayList<Position> accessible = new ArrayList<Position>();
-        ArrayList<Position> path = new ArrayList<Position>();
-        while (!path.contains(this.getTarget())) {
-            path.add(this.getPosition());
-            ArrayList<Position> adyacent = this.getAdyacents();
+
+        ArrayList<Position> path = new ArrayList<Position>(); // Path breakdown
+        ArrayList<Position> accessible = new ArrayList<Position>(); // openSet
+        ArrayList<Position> adyacent = new ArrayList<Position>(); // Adyacent legal positions
+
+        accessible.add(this.getPosition());
+
+        this.costs.putGCost(this.getPosition(), 0);
+        this.costs.putHCost(this.getPosition(), this.distanceToTarget());
+
+        while (!accessible.isEmpty()) {
+            // FIXME: Unfinished algorithm, may need changes.
+            adyacent = this.getAdyacents();
+            adyacent.removeAll(accessible);
             adyacent.removeAll(path);
             accessible.addAll(adyacent);
+            for (Position pos : accessible) {
+                this.costs.putGCost(pos, this.distanceTo(pos));
+                this.costs.putHCost(pos, (int) (Position.distance(pos, this.getTarget()) * 10));
+            }
+            path.add(this.getPosition());
+            accessible.remove(this.getPosition());
+            this.setPosition(this.costs.getLowestFCost());
+            if (this.getPosition().equals(this.getTarget())) {
+                return path;
+            }
+
+            for (Position pos : accessible) {
+
+            }
         }
-        return path;
+        throw new RuntimeException("No path was found");
 
     }
 

@@ -69,6 +69,19 @@ public class Position {
     }
 
     /**
+     * Sets the x and y coordinate according to an already existing position
+     * 
+     * @param p Already existing position
+     */
+    public void setPosition(Position p) {
+        if (p == null) {
+            throw new NullPointerException();
+        }
+        this.setX(p.getX());
+        this.setY(p.getY());
+    }
+
+    /**
      * Calculates a new position by increasing / decreasing the coordinate(s).
      * 1 stands for South-West
      * 2 stands for South
