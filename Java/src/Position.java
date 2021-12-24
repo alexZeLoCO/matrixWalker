@@ -56,9 +56,6 @@ public class Position {
      * @param x new x coordinate
      */
     public void setX(int x) {
-        if (x < 0) {
-            throw new IllegalArgumentException();
-        }
         this.x = x;
     }
 
@@ -68,9 +65,6 @@ public class Position {
      * @param y new y coordinate
      */
     public void setY(int y) {
-        if (y < 0) {
-            throw new IllegalArgumentException();
-        }
         this.y = y;
     }
 

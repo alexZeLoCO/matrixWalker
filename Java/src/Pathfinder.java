@@ -1,6 +1,4 @@
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 
 /**
  * Representation of a character that will pathfind to a given position -usually
@@ -10,6 +8,7 @@ public class Pathfinder extends Character {
 
     private Board<Entity> playground;
     private Position target;
+
     private Costs costs;
 
     /**
@@ -68,7 +67,7 @@ public class Pathfinder extends Character {
         super(name, x, y);
         this.playground = playground;
         this.target = target;
-        this.costs = new Costs();
+        this.costs = new Costs(new Position(playground.getRows(), playground.getCols()));
     }
 
     /**
@@ -109,6 +108,7 @@ public class Pathfinder extends Character {
     /**
      * Moves the Pathfinder's position once to the north (x-1)
      */
+    @Deprecated
     public void moveNorth() {
         this.setX(this.getX() - 1);
     }
@@ -116,6 +116,7 @@ public class Pathfinder extends Character {
     /**
      * Moves the Pathfinder's position once to the south (x+1)
      */
+    @Deprecated
     public void moveSouth() {
         this.setX(this.getX() + 1);
     }
@@ -123,6 +124,7 @@ public class Pathfinder extends Character {
     /**
      * Moves the Pathfinder's position once to the east (y+1)
      */
+    @Deprecated
     public void moveEast() {
         this.setY(this.getY() + 1);
     }
@@ -130,6 +132,7 @@ public class Pathfinder extends Character {
     /**
      * Moves the Pathfinder's position once to the west (y-1)
      */
+    @Deprecated
     public void moveWest() {
         this.setY(this.getY() - 1);
     }
@@ -150,89 +153,6 @@ public class Pathfinder extends Character {
      */
     public boolean hasTarget() {
         return this.target != null;
-    }
-
-    /*
-     * FIXME: Not sure of implementation, may need to rethink strategy.
-     * {Position -> {hCost, gCost, tCost}}
-     */
-    /**
-     * @see Pair.java
-     */
-    private final class Costs implements Iterable<Pair<Position, ArrayList<Integer>>> {
-        private ArrayList<Pair<Position, ArrayList<Integer>>> data;
-
-        public Costs() {
-            this(0);
-        }
-
-        public Costs(int size) {
-            this.data = new ArrayList<Pair<Position, ArrayList<Integer>>>(size);
-        }
-
-        public Costs(Collection<? extends Pair<Position, ArrayList<Integer>>> c) {
-            this(c.size());
-            this.data.addAll(c);
-        }
-
-        public ArrayList<Position> getKeys() {
-            ArrayList<Position> keys = new ArrayList<Position>(this.size());
-            for (Pair<Position, ArrayList<Integer>> p : this) {
-                keys.add(p.getKey());
-            }
-            return keys;
-        }
-
-        public int size() {
-            return this.data.size();
-        }
-
-        public boolean contains(Object o) {
-            if (o == null) {
-                throw new NullPointerException();
-            }
-            return this.data.contains(o);
-        }
-
-        public boolean add(Pair<Position, ArrayList<Integer>> p) {
-            if (p == null) {
-                throw new NullPointerException();
-            }
-            if (this.contains(p)) {
-                return false;
-            }
-            return this.data.add(p);
-        }
-
-        @Override
-        public Iterator<Pair<Position, ArrayList<Integer>>> iterator() {
-            return new CI();
-        }
-
-        private final class CI implements Iterator<Pair<Position, ArrayList<Integer>>> {
-            private int idx;
-
-            public CI() {
-                this.idx = 0;
-            }
-
-            public boolean hasNext() {
-                return this.idx < Costs.this.size();
-            }
-
-            public Pair<Position, ArrayList<Integer>> next() {
-                return Costs.this.data.get(idx++);
-            }
-
-            public Position getKey() {
-                return Costs.this.data.get(idx).getKey();
-            }
-
-            public ArrayList<Integer> getValue() {
-                return Costs.this.data.get(idx).getValue();
-            }
-        }
-
     }
 
     // ----- MATH MODULE -----
@@ -257,6 +177,74 @@ public class Pathfinder extends Character {
         return this.distanceTo(this.getTarget());
     }
 
+    public ArrayList<Position> getAdyacents() {
+        if (!this.isAware()) {
+            throw new IllegalStateException("This Pathfinder is not Aware");
+        }
+        ArrayList<Position> adyacents = new ArrayList<Position>();
+        Position test = new Position(this.getPosition());
+        // Testing East
+        test.setX(test.getX() + 1);
+        if (this.playground.legalPosition(test)) {
+            adyacents.add(test);
+        }
+        // Testing NorthEast
+        test.setY(test.getY() - 1);
+        if (this.playground.legalPosition(test)) {
+            adyacents.add(test);
+        }
+        // Testing North
+        test.setX(test.getX() - 1);
+        if (this.playground.legalPosition(test)) {
+            adyacents.add(test);
+        }
+        // Testing NorthWest
+        test.setX(test.getX() - 1);
+        if (this.playground.legalPosition(test)) {
+            adyacents.add(test);
+        }
+        // Testing West
+        test.setY(test.getY() + 1);
+        if (this.playground.legalPosition(test)) {
+            adyacents.add(test);
+        }
+        // Testing SouthWest
+        test.setY(test.getY() + 1);
+        if (this.playground.legalPosition(test)) {
+            adyacents.add(test);
+        }
+        // Testing South
+        test.setX(test.getX() + 1);
+        if (this.playground.legalPosition(test)) {
+            adyacents.add(test);
+        }
+        // Testing SouthEast
+        test.setX(test.getX() + 1);
+        if (this.playground.legalPosition(test)) {
+            adyacents.add(test);
+        }
+        return adyacents;
+    }
+
+    public ArrayList<Position> pathfindToTarget() {
+        if (!this.isAware()) {
+            throw new IllegalStateException("This Pathfinder is not Aware");
+        }
+        if (!this.hasTarget()) {
+            throw new IllegalStateException("This Pathfinder has no Target");
+        }
+        ArrayList<Position> accessible = new ArrayList<Position>();
+        ArrayList<Position> path = new ArrayList<Position>();
+        while (!path.contains(this.getTarget())) {
+            path.add(this.getPosition());
+            ArrayList<Position> adyacent = this.getAdyacents();
+            adyacent.removeAll(path);
+            accessible.addAll(adyacent);
+        }
+        return path;
+
+    }
+
     // ----- I / O -----
     @Override
     public String toString() {
@@ -269,4 +257,5 @@ public class Pathfinder extends Character {
         }
         return String.format("%s\tGoing towards: %s\n\t%s", super.toString(), "No target", aware);
     }
+
 }
