@@ -5,7 +5,7 @@ public class Costs implements Iterable<Pair<Position, ArrayList<Integer>>> {
 
     private static final int HCOST_POSITION = 0;
     private static final int GCOST_POSITION = 1;
-    private static final int FCOST_POSITION = 2;
+    private static final int FCOST_POSITION = 2;	//TODO: Delete fCost position, it can be calculated using hCost + gCost;
 
     private ArrayList<Pair<Position, ArrayList<Integer>>> data;
     private Position last;
